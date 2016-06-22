@@ -6,11 +6,11 @@
 //m = RandomMag(); //controlla dimensioni celle
 //SetMesh(128, 64, 1, 1.5625e-08, 1.508390625e-08, 5e-09, 0, 0, 0);
 SetMesh(512, 256, 2, 3.90625e-09, 3.7709765625e-09, 2.5e-09, 0, 0, 0);
-Msat    = 860e3;
+Msat    = 1000e3;
 Aex = 10e-12;
 //Aex     = 13e-12;
 //Xi      = 0.1
-alpha   = 0.02;
+alpha   = 1;
 m = Uniform(0, 0, 0)
 //CARICO MASCHERA
 SetGeom(ImageShape("/Users/Ale/goWorkspace/bin/maschere/Y_FULL.png"));
@@ -23,10 +23,12 @@ SetGeom(ImageShape("/Users/Ale/goWorkspace/bin/maschere/Y_FULL.png"));
 // regione 4 - uscita Y
 
 
-defregion(1, ImageShape("/Users/Ale/goWorkspace/bin/maschere/A2.png"));
-defregion(2,ImageShape("/Users/Ale/goWorkspace/bin/maschere/B2.png"));
-defregion(3,ImageShape("/Users/Ale/goWorkspace/bin/maschere/MID.png"));
-defregion(4,ImageShape("/Users/Ale/goWorkspace/bin/maschere/Y.png"));
+defregion(1, ImageShape("/Users/Ale/goWorkspace/bin/maschere/A.png"));
+defregion(2,ImageShape("/Users/Ale/goWorkspace/bin/maschere/A2.png"));
+defregion(3,ImageShape("/Users/Ale/goWorkspace/bin/maschere/B.png"));
+defregion(4,ImageShape("/Users/Ale/goWorkspace/bin/maschere/B2.png"));
+defregion(5,ImageShape("/Users/Ale/goWorkspace/bin/maschere/MID.png"));
+defregion(6,ImageShape("/Users/Ale/goWorkspace/bin/maschere/Y.png"));
 
 save(regions);
 
@@ -39,6 +41,4 @@ B_ext = vector(0.0155, 0, 0);
 B_ext.SetRegion(3, vector(0.008, 0, 0));
 // test per verificare se mumax ha capito le regioni
 m.setRegion(1,uniform(1, 0, 0));
-m.setRegion(2,uniform(1, 0, 0));
-m.setRegion(3,uniform(0, 0 ,0));
-m.setRegion(4,uniform(0, 0, 0));
+m.setRegion(3,uniform(1, 0, 0));
