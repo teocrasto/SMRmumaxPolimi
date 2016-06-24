@@ -1,4 +1,4 @@
-//Progetto mumax v0.5
+//Progetto mumax v0.8
 
 //verifica parametry permalloy
 //Aex = 10e-12;
@@ -46,6 +46,10 @@ B_ext = vector(0.0155, 0, 0);
 // va che devi fare la somma dei campi, non la fa in automatico
 // lungo x in MID: 155-70=80 verso dx
 B_ext.SetRegion(3, vector(0.0085, 0, 0));
+//campo per or
+//.SetRegion(3, vector(0.0155, 0, 0));
+
 // test per verificare se mumax ha capito le regioni
+// magnetizzazione con angolo di 5 gradi rispetto a x
 m.setRegion(1,uniform(0.996194698091746, 0.087155742747658, 0));
 m.setRegion(2,uniform(0.996194698091746, 0.087155742747658, 0));
