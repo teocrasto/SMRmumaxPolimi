@@ -47,5 +47,5 @@ B_ext = vector(0.0155, 0, 0);
 // lungo x in MID: 155-70=80 verso dx
 B_ext.SetRegion(3, vector(0.0085, 0, 0));
 // test per verificare se mumax ha capito le regioni
-m.setRegion(1,uniform(1, 0, 0));
-m.setRegion(2,uniform(1, 0, 0));
+m.setRegion(1,uniform(0.996194698091746, 0.087155742747658, 0));
+m.setRegion(2,uniform(0.996194698091746, 0.087155742747658, 0));
