@@ -1,55 +1,52 @@
-//Progetto mumax v0.8
+//Progetto mumax v0.9
 
-//verifica parametry permalloy
-//Aex = 10e-12;
-//alpha = 1  //damping?
-//m = RandomMag(); //controlla dimensioni celle
-//SetMesh(128, 64, 1, 1.5625e-08, 1.508390625e-08, 5e-09, 0, 0, 0);
+//mesh figa ma più lenta:
 //SetMesh(512, 256, 2, 3.90625e-09, 3.7709765625e-09, 2.5e-09, 0, 0, 0);
 
-//mesh piccolina per test
+//mesh piccolina
 SetMesh(256, 128, 2, 7.8125e-09, 7.541953125e-09, 2.5e-09, 0, 0, 0)
 
+//Maschera per definire la geometria della simulazione
 SetGeom(ImageShape("/Users/Ale/goWorkspace/bin/mask2/full.png"));
 
+//Parametri del materiale
 Msat    = 860e3;
 Aex = 13e-12;
 alpha   = 5;
-//Aex     = 13e-12;
-//Xi      = 0.1
 
-//CARICO MASCHERA
-//
+
 //Maschere per definire le regioni dell'oggetto
 //
 // regione 1 - ingresso A
 // regione 2 - ingresso B
-// regione 3 - zona centrale MID
-// regione 4 - uscita Y
-
-
+// regione 3 - zona centrale MID: è il driver per la porta logica
+//in base al campo applicato in MID otteniamo funzioni logiche diverse
 defregion(1, ImageShape("/Users/Ale/goWorkspace/bin/mask2/a.png"));
 defregion(2,ImageShape("/Users/Ale/goWorkspace/bin/mask2/b.png"));
 defregion(3,ImageShape("/Users/Ale/goWorkspace/bin/mask2/mid.png"));
-//defregion(4,ImageShape("/Users/Ale/goWorkspace/bin/maschere/B2.png"));
-//defregion(5,ImageShape("/Users/Ale/goWorkspace/bin/maschere/MID.png"));
-//defregion(6,ImageShape("/Users/Ale/goWorkspace/bin/maschere/Y.png"));
 
 save(regions);
+
+//Definisco la magnetizzazione iniziale
 m = Uniform(-1, 0, 0);
-relax();
+
+//salvataggio dei dati
+autosave(m, 200e-12);
+tableautosave(10e-12);
 
 //Campo esterno 155 oe
 B_ext = vector(0.0155, 0, 0);
 
-//Campo Hbias 70 oe applicato nella regione 3 MID
-// va che devi fare la somma dei campi, non la fa in automatico
-// lungo x in MID: 155-70=80 verso dx
-B_ext.SetRegion(3, vector(0.0085, 0, 0));
-//campo per or
-//.SetRegion(3, vector(0.0155, 0, 0));
+//Campo Hbias: applico un campo nella regione interessata
+//I campi non si sommano vettorialmente in automatico, lo devo fare io:
+//Per una AND applico un Hbias di 70 Oe -> 155-70
+//Per una  OR applico un Hbias di 10 Oe -> 155-10
 
-// test per verificare se mumax ha capito le regioni
-// magnetizzazione con angolo di 5 gradi rispetto a x
+B_ext.SetRegion(3, vector(0.0085, 0, 0));
+
+//Hbias per porta OR
+//B_ext.SetRegion(3, vector(0.0145, 0, 0));
+
+
 m.setRegion(1,uniform(0.996194698091746, 0.087155742747658, 0));
 m.setRegion(2,uniform(0.996194698091746, 0.087155742747658, 0));
