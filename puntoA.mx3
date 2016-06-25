@@ -12,7 +12,7 @@ SetGeom(ImageShape("/Users/Ale/goWorkspace/bin/mask2/full.png"));
 //Parametri del materiale
 Msat    = 860e3;
 Aex = 13e-12;
-alpha   = 5;
+alpha   = 0.01;
 
 
 //Maschere per definire le regioni dell'oggetto
