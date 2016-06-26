@@ -4,13 +4,13 @@
 SetMesh(512, 256, 2, 3.90625e-09, 3.7709765625e-09, 2.5e-09, 0, 0, 0);
 
 
-//mesh piccolina
+//mesh piccolina per test
 //SetMesh(256, 128, 2, 7.8125e-09, 7.541953125e-09, 2.5e-09, 0, 0, 0)
 
 //Maschera per definire la geometria della simulazione
 SetGeom(ImageShape("/Users/Ale/goWorkspace/bin/mask2/full.png"));
 
-//Parametri del materiale
+//Parametri del materiale: Permalloy
 Msat    = 860e3;
 Aex = 13e-12;
 alpha   = 0.01;
@@ -23,8 +23,8 @@ alpha   = 0.01;
 // regione 3 - zona centrale MID: è il driver per la porta logica
 //in base al campo applicato in MID otteniamo funzioni logiche diverse
 defregion(1, ImageShape("/Users/Ale/goWorkspace/bin/mask2/a.png"));
-defregion(2,ImageShape("/Users/Ale/goWorkspace/bin/mask2/b.png"));
-defregion(3,ImageShape("/Users/Ale/goWorkspace/bin/mask2/mid.png"));
+defregion(2, ImageShape("/Users/Ale/goWorkspace/bin/mask2/b.png"));
+defregion(3, ImageShape("/Users/Ale/goWorkspace/bin/mask2/mid.png"));
 
 save(regions);
 
@@ -35,6 +35,8 @@ m = Uniform(-1, 0, 0);
 autosave(m, 5e-11);
 tableautosave(10e-12);
 TableAdd(m.Region(3));
+//Salvo la magnetizzazione nella regione 3 in modo da sapere quando il segnale
+//passato
 
 //Campo esterno 155 oe
 B_ext = vector(0.0155, 0, 0);
@@ -45,13 +47,16 @@ B_ext = vector(0.0155, 0, 0);
 //Per una AND applico un Hbias di 70 Oe -> 155-70
 //Per una  OR applico un Hbias di 10 Oe -> 155-10
 
-//B_ext.SetRegion(3, vector(0.0085, 0, 0));
+//Hbias per porta AND
+B_ext.SetRegion(3, vector(0.0085, 0, 0));
 
 //Hbias per porta OR
-B_ext.SetRegion(3, vector(0.0145, 0, 0));
+//B_ext.SetRegion(3, vector(0.0145, 0, 0));
 
 //m.setRegion(1,uniform(1,0,0));
+//Angolo di 5 gradi rispetto asse x per la magnetizzazione per evitare problemi
+//di chiralità
 m.setRegion(1,uniform(0.996194698091746, 0.087155742747658, 0));
 m.setRegion(2,uniform(0.996194698091746, 0.087155742747658, 0));
 
-//Run(10e-9)
+Run(10e-9)
