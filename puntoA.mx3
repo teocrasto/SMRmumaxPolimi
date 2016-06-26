@@ -1,10 +1,11 @@
-//Progetto mumax v0.9
+//Progetto mumax v2
 
 //mesh figa ma più lenta:
-//SetMesh(512, 256, 2, 3.90625e-09, 3.7709765625e-09, 2.5e-09, 0, 0, 0);
+SetMesh(512, 256, 2, 3.90625e-09, 3.7709765625e-09, 2.5e-09, 0, 0, 0);
+
 
 //mesh piccolina
-SetMesh(256, 128, 2, 7.8125e-09, 7.541953125e-09, 2.5e-09, 0, 0, 0)
+//SetMesh(256, 128, 2, 7.8125e-09, 7.541953125e-09, 2.5e-09, 0, 0, 0)
 
 //Maschera per definire la geometria della simulazione
 SetGeom(ImageShape("/Users/Ale/goWorkspace/bin/mask2/full.png"));
@@ -12,7 +13,7 @@ SetGeom(ImageShape("/Users/Ale/goWorkspace/bin/mask2/full.png"));
 //Parametri del materiale
 Msat    = 860e3;
 Aex = 13e-12;
-alpha   = 5;
+alpha   = 0.01;
 
 
 //Maschere per definire le regioni dell'oggetto
@@ -31,22 +32,26 @@ save(regions);
 m = Uniform(-1, 0, 0);
 
 //salvataggio dei dati
-autosave(m, 200e-12);
+autosave(m, 5e-11);
 tableautosave(10e-12);
+TableAdd(m.Region(3));
 
 //Campo esterno 155 oe
 B_ext = vector(0.0155, 0, 0);
+
 
 //Campo Hbias: applico un campo nella regione interessata
 //I campi non si sommano vettorialmente in automatico, lo devo fare io:
 //Per una AND applico un Hbias di 70 Oe -> 155-70
 //Per una  OR applico un Hbias di 10 Oe -> 155-10
 
-B_ext.SetRegion(3, vector(0.0085, 0, 0));
+//B_ext.SetRegion(3, vector(0.0085, 0, 0));
 
 //Hbias per porta OR
-//B_ext.SetRegion(3, vector(0.0145, 0, 0));
+B_ext.SetRegion(3, vector(0.0145, 0, 0));
 
-
+//m.setRegion(1,uniform(1,0,0));
 m.setRegion(1,uniform(0.996194698091746, 0.087155742747658, 0));
 m.setRegion(2,uniform(0.996194698091746, 0.087155742747658, 0));
+
+//Run(10e-9)
