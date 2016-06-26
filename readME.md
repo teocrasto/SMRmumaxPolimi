@@ -13,5 +13,5 @@ __È Venerdi torno a casa con le bende__
 
 __È Venerdi svuotiamo tutto il minibar__
 
-__È Venerdi come le leggende__
+__È Venerdi come le leggende.__
 
