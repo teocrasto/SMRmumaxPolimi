@@ -8,7 +8,7 @@ SetMesh(512, 256, 2, 3.90625e-09, 3.7709765625e-09, 2.5e-09, 0, 0, 0);
 //SetMesh(256, 128, 2, 7.8125e-09, 7.541953125e-09, 2.5e-09, 0, 0, 0)
 
 //Maschera per definire la geometria della simulazione
-SetGeom(ImageShape("/Users/Ale/goWorkspace/bin/mask2/full.png"));
+SetGeom(ImageShape("./mask/full.png"));
 
 //Parametri del materiale: Permalloy
 Msat    = 860e3;
@@ -22,9 +22,9 @@ alpha   = 0.01;
 // regione 2 - ingresso B
 // regione 3 - zona centrale MID: è il driver per la porta logica
 //in base al campo applicato in MID otteniamo funzioni logiche diverse
-defregion(1, ImageShape("/Users/Ale/goWorkspace/bin/mask2/a.png"));
-defregion(2, ImageShape("/Users/Ale/goWorkspace/bin/mask2/b.png"));
-defregion(3, ImageShape("/Users/Ale/goWorkspace/bin/mask2/mid.png"));
+defregion(1, ImageShape("./a.png"));
+defregion(2, ImageShape("./mask/b.png"));
+defregion(3, ImageShape("./mask/mid.png"));
 
 save(regions);
 
