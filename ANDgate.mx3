@@ -1,62 +1,57 @@
-//Progetto mumax v2
+// Project for the course of Nanomagnetic Structures of
+// Engineering Physics at Politecnico di Milano
+// Commander Ale Smareglia - 2016
+// v2.1
 
-//mesh figa ma più lenta:
+// smaller and quicker mesh for test purpose
+// SetMesh(256, 128, 2, 7.8125e-09, 7.541953125e-09, 2.5e-09, 0, 0, 0)
+
+// finer (but slower) mesh
 SetMesh(512, 256, 2, 3.90625e-09, 3.7709765625e-09, 2.5e-09, 0, 0, 0);
 
-
-//mesh piccolina per test
-//SetMesh(256, 128, 2, 7.8125e-09, 7.541953125e-09, 2.5e-09, 0, 0, 0)
-
-//Maschera per definire la geometria della simulazione
+// Mask used to define the geometry of the
+// device under test (DUt)
 SetGeom(ImageShape("./mask/full.png"));
 
-//Parametri del materiale: Permalloy
-Msat    = 860e3;
-Aex = 13e-12;
-alpha   = 0.01;
 
-
-//Maschere per definire le regioni dell'oggetto
+// Masks used to define the DUT's regions:
 //
-// regione 1 - ingresso A
-// regione 2 - ingresso B
-// regione 3 - zona centrale MID: è il driver per la porta logica
-//in base al campo applicato in MID otteniamo funzioni logiche diverse
+// region 1 - input A
+// region 2 - input B
+// region 3 - central region D: it is the driver of the logic gate.
+// according to the field applied in D the gate can behave like
+// either OR or AND.
 defregion(1, ImageShape("./a.png"));
 defregion(2, ImageShape("./mask/b.png"));
 defregion(3, ImageShape("./mask/mid.png"));
 
+// produces an output file (.ovf) containg the geometry of the regions.
+// Handy for complex geometries so they can be loaded on the fly
 save(regions);
 
-//Definisco la magnetizzazione iniziale
-m = Uniform(-1, 0, 0);
-
-//salvataggio dei dati
-autosave(m, 5e-11);
-tableautosave(10e-12);
-TableAdd(m.Region(3));
-//Salvo la magnetizzazione nella regione 3 in modo da sapere quando il segnale
-//passato
-
-//Campo esterno 155 oe
+// Defining the parameters of the material, initial magnetizazion
+// and external applied field.
+// See MUMAX API page for units and any further documentation
+Msat    = 860e3;
+Aex     = 13e-12;
+alpha   = 0.01;
+m       = Uniform(-1, 0, 0);
 B_ext = vector(0.0155, 0, 0);
 
+// Hbias is modeled as an external field applied regionwise.
+// In this case the region of interest (ROI) is the D region (3)
+B_ext.SetRegion(3, vector(0.0145, 0, 0));
 
-//Campo Hbias: applico un campo nella regione interessata
-//I campi non si sommano vettorialmente in automatico, lo devo fare io:
-//Per una AND applico un Hbias di 70 Oe -> 155-70
-//Per una  OR applico un Hbias di 10 Oe -> 155-10
-
-//Hbias per porta AND
-B_ext.SetRegion(3, vector(0.0085, 0, 0));
-
-//Hbias per porta OR
-//B_ext.SetRegion(3, vector(0.0145, 0, 0));
-
-//m.setRegion(1,uniform(1,0,0));
-//Angolo di 5 gradi rispetto asse x per la magnetizzazione per evitare problemi
-//di chiralità
+// Setting the two inputs A, B
 m.setRegion(1,uniform(0.996194698091746, 0.087155742747658, 0));
 m.setRegion(2,uniform(0.996194698091746, 0.087155742747658, 0));
 
-Run(10e-9)
+// Data saving part
+// Magnetization (device-wise and region-wise is stored in a .ovf file.
+// The region 3 is useful to determine whether the domain wall is passed or
+// not across the region.
+autosave(m, 5e-11);
+tableautosave(10e-12);
+TableAdd(m.Region(3));
+
+Run(10e-9);
