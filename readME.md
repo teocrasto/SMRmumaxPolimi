@@ -6,7 +6,7 @@ They contain the code used to run the simulation with [mumax3](http://mumax.gith
 
 All the device is inside a magnetic field __Hext__ directed from left to right.
 
-The logic function of the gate can be modified by controlling a local __Hbias__ field parallel to the external field and modelleld in the code as a magnetic field applied only in a specific region (i.e. the MID region defined in `/mask`).
+The logic function of the gate can be modified by controlling a local __Hbias__ field parallel to the external field and modelleld in the code as a magnetic field applied only in a specific region, the driver (i.e. the D region defined in `/mask`).
 All the device is inside a magnetic field __Hext__ directed from left to right.
 
 The masks used for telling mumax the geometry of the problem and the geometry of the different regions considered are stored in the subfolder `/mask`. In this foldere there are either `.png` black/white images either `.pdf` files. They were both generated from an cad drawing software.
